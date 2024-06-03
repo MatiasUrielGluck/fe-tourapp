@@ -52,17 +52,17 @@
                 <div class="social-login-buttons">
                   <q-btn
                     square
-                    icon="img:/src/assets/icons/google.png"
+                    :icon="`img:${googleIcon}`"
                     class="social-btn"
                   />
                   <q-btn
                     square
-                    icon="img:/src/assets/icons/facebook.svg"
+                    :icon="`img:${facebookIcon}`"
                     class="social-btn"
                   />
                   <q-btn
                     square
-                    icon="img:/src/assets/icons/apple.png"
+                    :icon="`img:${appleIcon}`"
                     class="social-btn reduced"
                   />
                 </div>
@@ -105,10 +105,7 @@
                 :name="3"
                 img-src="https://cdn.quasar.dev/img/parallax2.jpg"
               />
-              <q-carousel-slide
-                :name="4"
-                img-src="/src/assets/images/nyc.jpg"
-              />
+              <q-carousel-slide :name="4" :img-src="nycImage" />
             </q-carousel>
           </div>
         </div>
@@ -119,6 +116,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import googleIcon from '/src/assets/icons/google.png';
+import facebookIcon from '/src/assets/icons/facebook.svg';
+import appleIcon from '/src/assets/icons/apple.png';
+import nycImage from '/src/assets/images/nyc.jpg';
 
 defineOptions({
   name: 'AuthenticationLayout',

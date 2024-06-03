@@ -1,5 +1,9 @@
 # Tour App (fe-tourapp)
 
+**Repositorio Backend:** https://github.com/MatiasUrielGluck/be-tourapp
+
+***Link al sitio en producción*** (sin funcionalidad ya que el backend no está en producción todavía): https://tourapp-uade.netlify.app
+
 Desarrollo del trabajo práctico de la materia Proceso de Desarrollo de Software, de la carrera Ingeniería Informática, UADE.
 
 El desarrollo de este proyecto consistió de las siguientes etapas:

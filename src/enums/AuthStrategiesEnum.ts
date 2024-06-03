@@ -1,8 +1,8 @@
 enum AuthStrategiesEnum {
-  LOCAL,
-  GOOGLE,
-  APPLE,
-  FACEBOOK,
+  LOCAL = 'LOCAL',
+  GOOGLE = 'GOOGLE',
+  APPLE = 'APPLE',
+  FACEBOOK = 'FACEBOOK',
 }
 
 export default AuthStrategiesEnum;

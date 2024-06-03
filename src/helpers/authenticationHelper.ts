@@ -25,8 +25,7 @@ export const authenticate = async (loginRequest: LoginDTO) => {
 };
 
 export const makeSignup = async (signupDTO: SignupDTO) => {
-  const signUpResponse = await signup(signupDTO);
-  await handleLoginResponse(signUpResponse);
+  return await signup(signupDTO);
 };
 
 export const destroyAuthentication = () => {

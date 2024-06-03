@@ -25,7 +25,7 @@
         label="Contraseña"
         filled
         input-style="font-size: 17px"
-        @keydown.enter="onSignup"
+        @keydown.enter="onSignup(AuthStrategiesEnum.LOCAL)"
         :rules="[(val) => isPasswordValid(val)]"
       >
         <template v-slot:append>
@@ -43,6 +43,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import {
+  authenticate,
   destroyAuthentication,
   makeSignup,
 } from 'src/helpers/authenticationHelper';
@@ -56,12 +57,14 @@ import {
 } from 'src/helpers/formValidationRules';
 import SignupDTO from 'src/dto/authentication/SignupDTO';
 import AuthStrategiesEnum from 'src/enums/AuthStrategiesEnum';
+import { useAccountStore } from 'stores/account-store';
 
 defineOptions({
   name: 'SignupPage',
 });
 
 const router = useRouter();
+const accountStore = useAccountStore();
 
 const email = ref('');
 const password = ref('');
@@ -77,6 +80,11 @@ const onSignup = async (authStrategy: AuthStrategiesEnum) => {
   try {
     userAlreadyExists.value = false;
     await makeSignup(signupDTO);
+    await authenticate(signupDTO);
+    if (!accountStore.kycCompleted) {
+      showSnackbar('success', 'Por favor, completá los datos');
+      return await router.push('/kyc');
+    }
     showSnackbar('success', '¡Hola de nuevo!');
     await router.push('/home');
   } catch (e) {

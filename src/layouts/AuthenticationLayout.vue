@@ -54,16 +54,19 @@
                     square
                     :icon="`img:${googleIcon}`"
                     class="social-btn"
+                    @click="showSocialModal(AuthStrategiesEnum.GOOGLE)"
                   />
                   <q-btn
                     square
                     :icon="`img:${facebookIcon}`"
                     class="social-btn"
+                    @click="showSocialModal(AuthStrategiesEnum.FACEBOOK)"
                   />
                   <q-btn
                     square
                     :icon="`img:${appleIcon}`"
                     class="social-btn reduced"
+                    @click="showSocialModal(AuthStrategiesEnum.APPLE)"
                   />
                 </div>
               </div>
@@ -120,6 +123,15 @@ import googleIcon from '/src/assets/icons/google.png';
 import facebookIcon from '/src/assets/icons/facebook.svg';
 import appleIcon from '/src/assets/icons/apple.png';
 import nycImage from '/src/assets/images/nyc.jpg';
+import AuthStrategiesEnum from 'src/enums/AuthStrategiesEnum';
+import { showSnackbar } from 'src/utils/snackbar';
+import LoginDTO from 'src/dto/authentication/LoginDTO';
+import { authenticate, makeSignup } from 'src/helpers/authenticationHelper';
+import SignupDTO from 'src/dto/authentication/SignupDTO';
+import { useRouter } from 'vue-router';
+import { useQuasar } from 'quasar';
+import { isEmailValid } from 'src/helpers/formValidationRules';
+import { useAccountStore } from 'stores/account-store';
 
 defineOptions({
   name: 'AuthenticationLayout',
@@ -134,7 +146,12 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   showErrorMsg: false,
 });
+
 defineEmits(['executeMain']);
+
+const $q = useQuasar();
+const router = useRouter();
+const accountStore = useAccountStore();
 
 const isLogin = props.action === 'login';
 const mainBtnText = isLogin ? 'Ingresar' : 'Registrarme';
@@ -144,6 +161,71 @@ const secondarySubtitle = isLogin
   ? 'Todavía no tenés una cuenta?'
   : 'Ya tenés una cuenta?';
 const slide = ref(1);
+const socialEmail = ref('');
+
+const showSocialModal = (authStrategy: AuthStrategiesEnum) => {
+  $q.dialog({
+    title: `Iniciar sesión con ${authStrategy}`,
+    message: `Por favor ingresá tu email de ${authStrategy}`,
+    prompt: {
+      model: '',
+      isValid: (val) => typeof isEmailValid(val) !== 'string',
+      type: 'text',
+    },
+    cancel: true,
+    persistent: true,
+  }).onOk((data) => {
+    socialEmail.value = data;
+    onSocialLogin(authStrategy);
+  });
+};
+
+const socialSignup = async (authStrategy: AuthStrategiesEnum) => {
+  try {
+    const signupDTO: SignupDTO = {
+      authStrategy: authStrategy,
+      email: socialEmail.value,
+    };
+
+    await makeSignup(signupDTO);
+    await onSocialLogin(authStrategy, 1);
+  } catch (e) {
+    console.error(e);
+    showSnackbar(
+      'error',
+      'Estamos teniendo problemas. Por favor intentá de nuevo.'
+    );
+  }
+};
+
+const onSocialLogin = async (
+  authStrategy: AuthStrategiesEnum,
+  attempts = 0
+) => {
+  const loginRequest: LoginDTO = {
+    authStrategy: authStrategy,
+    email: socialEmail.value,
+  };
+  try {
+    await authenticate(loginRequest);
+
+    if (!accountStore.kycCompleted) {
+      showSnackbar('success', 'Por favor, completá los datos');
+      return await router.push('/kyc');
+    }
+
+    showSnackbar('success', '¡Hola de nuevo!');
+    await router.push('/home');
+  } catch (e) {
+    if (attempts > 0) {
+      showSnackbar(
+        'error',
+        'Estamos teniendo problemas. Por favor intentá de nuevo.'
+      );
+    }
+    await socialSignup(authStrategy);
+  }
+};
 </script>
 
 <style scoped lang="scss">

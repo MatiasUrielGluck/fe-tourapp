@@ -39,7 +39,7 @@ const routes: RouteRecordRaw[] = [
   {
     name: 'kyc',
     path: '/kyc',
-    component: () => import('pages/KycPage.vue'),
+    component: () => import('pages/kyc/KycPage.vue'),
     meta: { transition: 'fade' },
   },
 

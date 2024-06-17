@@ -86,7 +86,7 @@ const onLogin = async (authStrategy: AuthStrategiesEnum) => {
 
 onMounted(() => {
   if (new URLSearchParams(window.location.search).get('error')) {
-    showSnackbar('error', 'Please login again');
+    showSnackbar('error', 'Por favor volvé a ingresar');
   }
 });
 </script>

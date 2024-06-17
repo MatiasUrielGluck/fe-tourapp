@@ -1,5 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 import { destroyAuthentication } from 'src/helpers/authenticationHelper';
+import { showSnackbar } from 'src/utils/snackbar';
 
 const BASE_URL = process.env.SERVER_URL;
 
@@ -25,8 +26,12 @@ AuthorizedService.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (error.response.status === 403) destroyAuthentication();
-    window.location.replace('/login?error=true');
+    if (error.response.status === 403) {
+      destroyAuthentication();
+      window.location.replace('/login?error=true');
+    } else if (error.response.status === 500) {
+      showSnackbar('error', 'Ups! Parece que estamos teniendo problemas');
+    }
     return;
   }
 );

@@ -20,6 +20,14 @@ export const minLength = (
   return value.length >= length || invalidMsg;
 };
 
+export const maxLength = (
+  value: string,
+  length: number,
+  invalidMsg = `Este campo debe tener máximo ${length} caracteres`
+) => {
+  return value.length <= length || invalidMsg;
+};
+
 export const hasLetter = (
   value: string,
   invalidMsg = 'Este campo debe tener al menos 1 letra'

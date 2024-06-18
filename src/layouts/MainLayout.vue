@@ -3,13 +3,24 @@
     <q-header elevated class="bg-primary text-white">
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
-
         <q-toolbar-title> {{ titleBar }} </q-toolbar-title>
+
+        <q-btn flat dense round icon="notifications" class="q-ml-md">
+          <q-badge color="red" floating>4</q-badge>
+          <q-menu transition-show="jump-down" transition-hide="jump-up">
+            <q-list style="min-width: 100px">
+              <q-item clickable>
+                <q-item-section>Notification example</q-item-section>
+              </q-item>
+            </q-list>
+          </q-menu>
+        </q-btn>
       </q-toolbar>
     </q-header>
 
     <q-drawer
       v-model="drawerOpen"
+      no-swipe-backdrop
       side="left"
       bordered
       style="background: #fefbf6"
@@ -54,43 +65,60 @@ const router = useRouter();
 const drawerOpen = ref(false);
 
 const titleBar = computed(() => {
-  return capitalize(router.currentRoute.value.name as string);
+  const menuItem = menuList.value.find(
+    (item) => item.routeName === (router.currentRoute.value.name as string)
+  );
+  return capitalize(<string>menuItem?.label);
 });
 
 const menuList = computed(() => {
   const list: Array<DrawerItemType> = [
     {
       icon: 'home',
-      routeName: 'dashboard',
-      label: 'Dashboard',
+      routeName: 'inicio',
+      label: 'Inicio',
       separator: false,
       position: 'top',
     },
     {
-      icon: 'apps',
-      routeName: 'applications',
-      label: 'Applications',
+      icon: 'chat',
+      routeName: 'chats',
+      label: 'Chats',
       separator: false,
       position: 'top',
     },
     {
-      icon: 'toggle_on',
-      routeName: 'feature-flags',
-      label: 'Feature Flags',
+      icon: 'flight',
+      routeName: 'viajes',
+      label: 'Viajes',
+      separator: false,
+      position: 'top',
+    },
+    {
+      icon: 'manage_accounts',
+      routeName: 'servicios',
+      label: 'Mis servicios',
+      separator: false,
+      position: 'top',
+    },
+    {
+      icon: 'payments',
+      routeName: 'documentos',
+      label: 'Historial de pago',
       separator: false,
       position: 'top',
     },
     {
       icon: 'settings',
       routeName: 'settings',
-      label: 'Settings',
+      label: 'Preferencias',
       separator: false,
       position: 'bottom',
     },
     {
       icon: 'logout',
       onClick: logout,
-      label: 'Logout',
+      label: 'Cerrar sesión',
       separator: false,
       position: 'bottom',
     },

@@ -57,7 +57,7 @@ export default route(function (/* { store, ssrContext } */) {
         await setAccountInfo();
         if (!accountStore.kycCompleted) return next({ name: 'kyc' });
         if (to.name === 'login' || to.name === 'signup' || to.name === 'kyc') {
-          return next({ name: 'dashboard' });
+          return next({ name: 'inicio' });
         }
         return next();
       } else if (!accountStore.kycCompleted) {
@@ -67,7 +67,7 @@ export default route(function (/* { store, ssrContext } */) {
         to.name === 'signup' ||
         to.name === 'kyc'
       ) {
-        next({ name: 'dashboard' });
+        next({ name: 'inicio' });
       } else next();
     } catch (e) {
       console.error(e);

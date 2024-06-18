@@ -7,7 +7,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       {
-        name: 'dashboard',
+        name: 'inicio',
         path: '/',
         component: () => import('pages/dashboard/IndexPage.vue'),
         meta: { transition: 'fade' },

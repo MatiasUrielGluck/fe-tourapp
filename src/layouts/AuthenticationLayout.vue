@@ -215,7 +215,7 @@ const onSocialLogin = async (
     }
 
     showSnackbar('success', '¡Hola de nuevo!');
-    await router.push('/home');
+    await router.push('/');
   } catch (e) {
     if (attempts > 0) {
       showSnackbar(

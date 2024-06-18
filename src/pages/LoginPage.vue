@@ -76,7 +76,7 @@ const onLogin = async (authStrategy: AuthStrategiesEnum) => {
       return await router.push('/kyc');
     }
     showSnackbar('success', '¡Hola de nuevo!');
-    await router.push('/home');
+    await router.push('/');
   } catch (e) {
     console.error(e);
     destroyAuthentication();

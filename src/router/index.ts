@@ -7,11 +7,9 @@ import {
 } from 'vue-router';
 
 import routes from './routes';
-import {
-  destroyAuthentication,
-  setAccountInfo,
-} from 'src/helpers/authenticationHelper';
+import { destroyAuthentication } from 'src/helpers/authenticationHelper';
 import { useAccountStore } from 'stores/account-store';
+import { initializeInstance } from 'src/helpers/initializeInstance';
 
 /*
  * If not building with SSR mode, you can
@@ -41,6 +39,7 @@ export default route(function (/* { store, ssrContext } */) {
 
   Router.beforeEach(async (to, from, next) => {
     const accountStore = useAccountStore();
+
     try {
       if (
         !localStorage.getItem('token') &&
@@ -54,7 +53,8 @@ export default route(function (/* { store, ssrContext } */) {
       } else if (!localStorage.getItem('token')) {
         return next();
       } else if (!accountStore.authenticated) {
-        await setAccountInfo();
+        await initializeInstance();
+
         if (!accountStore.kycCompleted) return next({ name: 'kyc' });
         if (to.name === 'login' || to.name === 'signup' || to.name === 'kyc') {
           return next({ name: 'inicio' });

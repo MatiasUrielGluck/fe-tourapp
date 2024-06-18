@@ -208,7 +208,6 @@ const onSocialLogin = async (
   };
   try {
     await authenticate(loginRequest);
-
     if (!accountStore.kycCompleted) {
       showSnackbar('success', 'Por favor, completá los datos');
       return await router.push('/kyc');

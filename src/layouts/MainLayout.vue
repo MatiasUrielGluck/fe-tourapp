@@ -5,16 +5,7 @@
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
         <q-toolbar-title> {{ titleBar }} </q-toolbar-title>
 
-        <q-btn flat dense round icon="notifications" class="q-ml-md">
-          <q-badge color="red" floating>4</q-badge>
-          <q-menu transition-show="jump-down" transition-hide="jump-up">
-            <q-list style="min-width: 100px">
-              <q-item clickable>
-                <q-item-section>Notification example</q-item-section>
-              </q-item>
-            </q-list>
-          </q-menu>
-        </q-btn>
+        <notification-menu />
       </q-toolbar>
     </q-header>
 
@@ -55,6 +46,7 @@ import { useRouter } from 'vue-router';
 import DrawerItem from 'components/DrawerItem.vue';
 import DrawerItemType from 'src/types/DrawerItemType';
 import { logout } from 'src/helpers/authenticationHelper';
+import NotificationMenu from 'components/common/NotificationMenu.vue';
 
 defineOptions({
   name: 'MainLayout',
@@ -62,8 +54,10 @@ defineOptions({
 
 const router = useRouter();
 
+// Ref
 const drawerOpen = ref(false);
 
+// Computed
 const titleBar = computed(() => {
   const menuItem = menuList.value.find(
     (item) => item.routeName === (router.currentRoute.value.name as string)
@@ -134,6 +128,7 @@ const bottomMenuList = computed(() => {
   return menuList.value.filter((item) => item.position === 'bottom');
 });
 
+// Method
 const toggleLeftDrawer = () => (drawerOpen.value = !drawerOpen.value);
 </script>
 

@@ -73,9 +73,9 @@ import AditionalInfoStep from 'pages/kyc/steps/AdditionalInfoStep.vue';
 import CredentialStep from './steps/CredentialStep.vue';
 import RolUsuarioEnum from 'src/enums/RolUsuarioEnum';
 import { handleGeneralKyc, handleGuiaKyc } from 'src/helpers/kycHelper';
-import { setAccountInfo } from 'src/helpers/authenticationHelper';
 import { useRouter } from 'vue-router';
 import { showSnackbar } from 'src/utils/snackbar';
+import { initializeInstance } from 'src/helpers/initializeInstance';
 
 defineOptions({
   name: 'KycPage',
@@ -151,7 +151,7 @@ const saveKycData = async () => {
     }
 
     if (kycCompleted) {
-      await setAccountInfo();
+      await initializeInstance();
       showSnackbar('success', 'Ahora a viajar!');
       await router.push('/');
     }
@@ -185,8 +185,8 @@ const saveKycData = async () => {
 
   .stepper-nav {
     position: fixed;
-    bottom: 0px;
-    left: 0px;
+    bottom: 0;
+    left: 0;
     padding: 24px;
     width: 100%;
     background: #fff;

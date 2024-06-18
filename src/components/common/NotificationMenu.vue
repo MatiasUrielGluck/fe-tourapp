@@ -26,7 +26,7 @@
                 <q-btn
                   v-if="!notification.visto"
                   class="btn"
-                  icon="check"
+                  icon="visibility"
                   dense
                   flat
                   color="primary"

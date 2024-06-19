@@ -1,6 +1,7 @@
 import GenderEnum from 'src/enums/GenderEnum';
 
 type AccountType = {
+  isGuide: boolean;
   authenticated: boolean;
   email: string;
   nombre: string;

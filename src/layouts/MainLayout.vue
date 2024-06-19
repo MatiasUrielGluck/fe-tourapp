@@ -47,22 +47,28 @@ import DrawerItem from 'components/DrawerItem.vue';
 import DrawerItemType from 'src/types/DrawerItemType';
 import { logout } from 'src/helpers/authenticationHelper';
 import NotificationMenu from 'components/common/NotificationMenu.vue';
+import { useAccountStore } from 'stores/account-store';
 
 defineOptions({
   name: 'MainLayout',
 });
 
 const router = useRouter();
+const accountStore = useAccountStore();
 
 // Ref
 const drawerOpen = ref(false);
 
 // Computed
 const titleBar = computed(() => {
-  const menuItem = menuList.value.find(
+  const menuItem = menuListToShow.value.find(
     (item) => item.routeName === (router.currentRoute.value.name as string)
   );
   return capitalize(<string>menuItem?.label);
+});
+
+const menuListToShow = computed(() => {
+  return menuList.value.filter((menuItem) => menuItem.show);
 });
 
 const menuList = computed(() => {
@@ -73,6 +79,7 @@ const menuList = computed(() => {
       label: 'Inicio',
       separator: false,
       position: 'top',
+      show: true,
     },
     {
       icon: 'chat',
@@ -80,6 +87,7 @@ const menuList = computed(() => {
       label: 'Chats',
       separator: false,
       position: 'top',
+      show: true,
     },
     {
       icon: 'flight',
@@ -87,6 +95,7 @@ const menuList = computed(() => {
       label: 'Viajes',
       separator: false,
       position: 'top',
+      show: true,
     },
     {
       icon: 'manage_accounts',
@@ -94,6 +103,7 @@ const menuList = computed(() => {
       label: 'Mis servicios',
       separator: false,
       position: 'top',
+      show: accountStore.isGuide,
     },
     {
       icon: 'payments',
@@ -101,6 +111,7 @@ const menuList = computed(() => {
       label: 'Historial de pago',
       separator: false,
       position: 'top',
+      show: true,
     },
     {
       icon: 'settings',
@@ -108,6 +119,7 @@ const menuList = computed(() => {
       label: 'Preferencias',
       separator: false,
       position: 'bottom',
+      show: true,
     },
     {
       icon: 'logout',
@@ -115,17 +127,18 @@ const menuList = computed(() => {
       label: 'Cerrar sesión',
       separator: false,
       position: 'bottom',
+      show: true,
     },
   ];
   return list;
 });
 
 const topMenuList = computed(() => {
-  return menuList.value.filter((item) => item.position === 'top');
+  return menuListToShow.value.filter((item) => item.position === 'top');
 });
 
 const bottomMenuList = computed(() => {
-  return menuList.value.filter((item) => item.position === 'bottom');
+  return menuListToShow.value.filter((item) => item.position === 'bottom');
 });
 
 // Method

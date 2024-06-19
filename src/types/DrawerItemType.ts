@@ -5,6 +5,7 @@ type DrawerItemType = {
   position: 'top' | 'bottom';
   separator: boolean;
   onClick?: () => void;
+  show: boolean;
 };
 
 export default DrawerItemType;

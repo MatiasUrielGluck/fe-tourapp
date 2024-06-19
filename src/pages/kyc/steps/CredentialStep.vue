@@ -1,5 +1,37 @@
 <template>
   <div class="form-container">
+    <div>
+      <q-chip
+        v-for="(lang, index) in kycStore.idiomas"
+        :key="index"
+        color="primary"
+        text-color="white"
+        removable
+        @remove="removeLanguage(lang)"
+      >
+        {{ lang }}
+      </q-chip>
+    </div>
+
+    <q-select
+      filled
+      v-model="language"
+      use-input
+      input-debounce="0"
+      label="Seleccioná idiomas"
+      hide-selected
+      :options="languageOptions"
+      @filter="filterLanguage"
+      class="form-input"
+      style="margin-bottom: 20px"
+    >
+      <template v-slot:no-option>
+        <q-item>
+          <q-item-section class="text-grey"> No results </q-item-section>
+        </q-item>
+      </template>
+    </q-select>
+
     <q-input
       v-model="kycStore.credencial.numero"
       ref="numeroTxt"
@@ -64,7 +96,11 @@ const emit = defineEmits(['nextDisabled']);
 
 const kycStore = useKycStore();
 
+const languageList = ['Español', 'Inglés'];
+
 // Ref
+const language = ref('');
+const languageOptions = ref<Array<string>>(languageList);
 const numeroTxt = ref<QInput | null>(null);
 const vencimientoTxt = ref<QInput | null>(null);
 const fotoTxt = ref<QInput | null>(null);
@@ -76,9 +112,29 @@ const canContinue = computed<boolean>(() => {
     !vencimientoTxt.value?.hasError &&
     !!kycStore.credencial.numero &&
     !!kycStore.credencial.vencimiento &&
-    !!kycStore.credencial.foto
+    !!kycStore.credencial.foto &&
+    kycStore.idiomas.length > 0
   );
 });
+
+const filterLanguage = (val: string, update: any) => {
+  if (val === '') {
+    update(() => {
+      languageOptions.value = languageList;
+    });
+    return;
+  }
+
+  update(() => {
+    languageOptions.value = languageList.filter(
+      (lang) => lang.toLowerCase().indexOf(val.toLowerCase()) > -1
+    );
+  });
+};
+
+const removeLanguage = (lang: string) => {
+  kycStore.idiomas = kycStore.idiomas.filter((l) => l !== lang);
+};
 
 const loadImage = async (foto: File) => {
   try {
@@ -100,11 +156,19 @@ watch(foto, async (value) => {
   if (value) await loadImage(value);
 });
 
+watch(language, (newVal) => {
+  if (newVal === '') return;
+  language.value = '';
+  if (kycStore.idiomas.includes(newVal)) return;
+  kycStore.idiomas.push(newVal);
+});
+
 onMounted(() => {
   if (
     !!kycStore.credencial.numero &&
     !!kycStore.credencial.vencimiento &&
-    !!kycStore.credencial.foto
+    !!kycStore.credencial.foto &&
+    kycStore.idiomas.length > 0
   )
     emit('nextDisabled', false);
 });

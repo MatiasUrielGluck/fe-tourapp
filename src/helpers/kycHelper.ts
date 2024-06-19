@@ -25,6 +25,7 @@ export const handleGuiaKyc = async (): Promise<boolean> => {
     foto: kycStore.credencial.foto,
     numero: Number(kycStore.credencial.numero),
     vencimiento: new Date(kycStore.credencial.vencimiento),
+    idiomas: kycStore.idiomas,
   };
 
   const responseDTO = await saveGuiaKyc(data);

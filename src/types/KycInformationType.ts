@@ -16,6 +16,7 @@ type KycInformationType = {
   numTelefono: string;
   foto: string;
   credencial: CredentialType;
+  idiomas: Array<string>;
 };
 
 export default KycInformationType;

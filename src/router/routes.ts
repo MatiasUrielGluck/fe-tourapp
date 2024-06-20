@@ -19,6 +19,12 @@ const routes: RouteRecordRaw[] = [
         meta: { transition: 'fade' },
       },
       {
+        name: 'viajes',
+        path: '/viajes',
+        component: () => import('pages/dashboard/ViajePage.vue'),
+        meta: { transition: 'fade' },
+      },
+      {
         name: 'settings',
         path: '/settings',
         component: () => import('pages/dashboard/SettingsPage.vue'),

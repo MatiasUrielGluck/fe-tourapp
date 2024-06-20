@@ -1,24 +1,29 @@
 <template>
   <q-page>
+    <servicio-creation-modal
+      v-model="creationOpen"
+      @refresh-data="fetchServices"
+    />
+
+    <servicio-edition-modal
+      :servicio="selectedService"
+      v-model="editionOpen"
+      @refresh-data="fetchServices"
+    />
     <div v-if="!servicios?.length" class="empty-container">
       <h1>Todavía no ofrecés ningún servicio</h1>
-      <q-btn icon="add" label="Crear un servicio" color="primary" rounded />
+      <q-btn
+        icon="add"
+        label="Crear un servicio"
+        color="primary"
+        rounded
+        @click="creationOpen = true"
+      />
     </div>
     <div v-else class="servicio-container">
       <q-page-sticky position="bottom-right" :offset="[18, 18]">
         <q-btn fab icon="add" color="primary" @click="creationOpen = true" />
       </q-page-sticky>
-
-      <servicio-creation-modal
-        v-model="creationOpen"
-        @refresh-data="fetchServices"
-      />
-
-      <servicio-edition-modal
-        :servicio="selectedService"
-        v-model="editionOpen"
-        @refresh-data="fetchServices"
-      />
 
       <h1>Administrá tus servicios</h1>
       <div class="card-list-container">
@@ -122,6 +127,7 @@ onMounted(async () => {
 
 <style scoped lang="scss">
 .empty-container {
+  height: 90vh;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;

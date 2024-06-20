@@ -13,6 +13,12 @@ const routes: RouteRecordRaw[] = [
         meta: { transition: 'fade' },
       },
       {
+        name: 'servicios',
+        path: '/servicios',
+        component: () => import('pages/dashboard/ServicioPage.vue'),
+        meta: { transition: 'fade' },
+      },
+      {
         name: 'settings',
         path: '/settings',
         component: () => import('pages/dashboard/SettingsPage.vue'),

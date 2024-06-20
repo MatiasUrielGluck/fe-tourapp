@@ -4,6 +4,7 @@ import AccountType from 'src/types/AccountType';
 const initialState: AccountType = {
   authenticated: false,
 
+  id: 0,
   isGuide: false,
   email: '',
   nombre: '',

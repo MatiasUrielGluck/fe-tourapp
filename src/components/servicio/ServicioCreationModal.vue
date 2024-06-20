@@ -13,10 +13,23 @@
           type="number"
           label="Precio"
           prefix="$"
+          :rules="[(val) => required(val)]"
           class="input"
         />
-        <q-input filled v-model="pais" label="País" class="input" />
-        <q-input filled v-model="ciudad" label="Ciudad" class="input" />
+        <q-input
+          filled
+          v-model="pais"
+          label="País"
+          :rules="[(val) => required(val)]"
+          class="input"
+        />
+        <q-input
+          filled
+          v-model="ciudad"
+          label="Ciudad"
+          :rules="[(val) => required(val)]"
+          class="input"
+        />
       </q-card-section>
 
       <q-card-actions align="right">
@@ -38,6 +51,7 @@ import { ref } from 'vue';
 import { stringToTipoServicio } from 'src/enums/TipoServicioEnum';
 import ServicioRequestDTO from 'src/dto/servicio/ServicioRequestDTO';
 import { crearServicio } from 'src/services/servicio.service';
+import { required } from 'src/helpers/formValidationRules';
 
 defineOptions({
   name: 'ServicioCreationModal',

@@ -4,6 +4,7 @@
     v-model="model"
     :options="serviceOptions"
     label="Tipo de servicio"
+    :rules="[(val) => required(val)]"
   />
 </template>
 
@@ -11,6 +12,7 @@
 import TipoServicioEnum, {
   tipoServicioToString,
 } from 'src/enums/TipoServicioEnum';
+import { required } from 'src/helpers/formValidationRules';
 
 defineOptions({
   name: 'TipoServicioSelect',

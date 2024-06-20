@@ -12,6 +12,7 @@
           type="number"
           label="Precio"
           prefix="$"
+          :rules="[(val) => required(val)]"
           class="input"
         />
       </q-card-section>
@@ -34,6 +35,7 @@ import { ref, watch } from 'vue';
 import ServicioRequestDTO from 'src/dto/servicio/ServicioRequestDTO';
 import { editarServicio } from 'src/services/servicio.service';
 import ServicioType from 'src/types/ServicioType';
+import { required } from 'src/helpers/formValidationRules';
 
 defineOptions({
   name: 'ServicioEditionModal',

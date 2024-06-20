@@ -1,0 +1,9 @@
+enum EstadosViajeEnum {
+  INICIALIZADO = 'INICIALIZADO',
+  RESERVADO = 'RESERVADO',
+  CONFIRMADO = 'CONFIRMADO',
+  CANCELADO = 'CANCELADO',
+  CONCLUIDO = 'CONCLUIDO',
+}
+
+export default EstadosViajeEnum;

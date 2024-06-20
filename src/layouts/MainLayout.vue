@@ -92,7 +92,7 @@ const menuList = computed(() => {
     {
       icon: 'flight',
       routeName: 'viajes',
-      label: 'Viajes',
+      label: 'Mis viajes',
       separator: false,
       position: 'top',
       show: true,

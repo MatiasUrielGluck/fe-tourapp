@@ -10,12 +10,18 @@
         @click="router.push({ name: 'inicio' })"
       />
     </div>
+    <div v-else class="viaje-container">
+      <h1>Mis viajes</h1>
+
+      <q-list> </q-list>
+    </div>
   </q-page>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { getViajes } from 'src/services/viaje.service';
 
 defineOptions({
   name: 'ViajePage',
@@ -25,6 +31,20 @@ const router = useRouter();
 
 // Ref
 const viajes = ref();
+
+// Methods
+const fetchViajes = async () => {
+  try {
+    viajes.value = await getViajes();
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+// Cycle
+onMounted(async () => {
+  await fetchViajes();
+});
 </script>
 
 <style scoped lang="scss">
@@ -39,6 +59,16 @@ const viajes = ref();
 
   h1 {
     font-size: 36px;
+  }
+}
+
+.viaje-container {
+  padding: 18px;
+
+  h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    text-align: center;
   }
 }
 </style>

@@ -18,6 +18,7 @@
           v-for="(viajeReview, index) in viajes"
           :key="index"
           :viaje-review="viajeReview"
+          @refresh-trips="fetchViajes"
         />
       </div>
     </div>
@@ -85,11 +86,12 @@ onMounted(async () => {
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     gap: 30px;
     max-width: 1140px;
     max-height: 80vh;
     overflow: scroll;
+    padding-bottom: 50px;
   }
 }
 </style>

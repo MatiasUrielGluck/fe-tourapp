@@ -52,9 +52,16 @@
 
     <q-separator />
 
-    <q-card-actions align="right">
-      <q-btn flat color="red"> Cancelar </q-btn>
-      <q-btn flat color="primary"> Confirmar </q-btn>
+    <q-card-actions v-if="viajeStateUI.actions" align="right">
+      <q-btn
+        v-for="(btn, index) in viajeStateUI.actions"
+        :key="index"
+        flat
+        :color="btn.color"
+        @click="triggerAction(btn.action)"
+      >
+        {{ btn.label }}
+      </q-btn>
     </q-card-actions>
   </q-card>
 </template>
@@ -68,6 +75,7 @@ import AccountType from 'src/types/AccountType';
 import userTemplate from 'src/assets/icons/user_template.png';
 import ViajeState from 'src/logic/ViajeState/ViajeState';
 import getState from 'src/logic/ViajeState';
+import { ActionFn } from 'src/logic/ViajeState/types/ActionButton';
 
 defineOptions({
   name: 'ViajeCard',
@@ -78,6 +86,8 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+
+const emit = defineEmits(['refreshTrips']);
 
 const accountStore = useAccountStore();
 
@@ -107,12 +117,21 @@ const fechaFin = computed<string>(() => {
 });
 
 const viajeStateUI = computed<ViajeState>(() => {
-  return getState(props.viajeReview.viaje.estado);
+  return getState(props.viajeReview.viaje);
 });
 
 // Method
 const getFullname = (user: AccountType) => {
   return user.nombre + ' ' + user.apellido;
+};
+
+const triggerAction = async (action: ActionFn) => {
+  try {
+    await action();
+    emit('refreshTrips');
+  } catch (e) {
+    console.error(e);
+  }
 };
 </script>
 

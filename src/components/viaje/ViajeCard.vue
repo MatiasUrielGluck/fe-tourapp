@@ -101,7 +101,7 @@ const user = computed<AccountType>(() => {
 });
 
 const photo = computed(() => {
-  return user.value.foto ?? userTemplate;
+  return user.value.foto ? user.value.foto : userTemplate;
 });
 
 const userFullName = computed<string>(() => {

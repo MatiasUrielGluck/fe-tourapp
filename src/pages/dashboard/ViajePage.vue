@@ -72,6 +72,8 @@ onMounted(async () => {
 
 .viaje-container {
   padding: 18px;
+  display: grid;
+  place-items: center;
 
   h1 {
     font-size: 36px;
@@ -85,6 +87,9 @@ onMounted(async () => {
     justify-content: center;
     align-items: center;
     gap: 30px;
+    max-width: 1140px;
+    max-height: 80vh;
+    overflow: scroll;
   }
 }
 </style>

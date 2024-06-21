@@ -31,14 +31,18 @@
     <q-separator />
 
     <q-card-actions class="info-container">
-      <q-icon name="event" size="24px" />
-      <p class="text-subtitle1 q-mb-none">{{ viajeReview.viaje.estado }}</p>
+      <q-icon
+        :name="viajeStateUI.info.icon"
+        size="24px"
+        :color="viajeStateUI.info.color"
+      />
+      <p class="text-subtitle1 q-mb-none">{{ viajeStateUI.info.label }}</p>
     </q-card-actions>
 
     <q-separator />
 
     <q-card-actions class="info-container">
-      <q-icon name="event" size="24px" />
+      <q-icon name="date_range" size="24px" />
       <p class="text-subtitle1 q-mb-none">
         {{ fechaInicio }}
       </p>
@@ -62,6 +66,8 @@ import { computed, ref } from 'vue';
 import { useAccountStore } from 'stores/account-store';
 import AccountType from 'src/types/AccountType';
 import userTemplate from 'src/assets/icons/user_template.png';
+import ViajeState from 'src/logic/ViajeState/ViajeState';
+import getState from 'src/logic/ViajeState';
 
 defineOptions({
   name: 'ViajeCard',
@@ -98,6 +104,10 @@ const fechaInicio = computed<string>(() => {
 
 const fechaFin = computed<string>(() => {
   return formatDateOnly(new Date(props.viajeReview.viaje.fechaFin));
+});
+
+const viajeStateUI = computed<ViajeState>(() => {
+  return getState(props.viajeReview.viaje.estado);
 });
 
 // Method

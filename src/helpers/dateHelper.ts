@@ -8,3 +8,11 @@ export function formatDate(date: Date): string {
 
   return formattedDate;
 }
+
+export function formatDateOnly(date: Date): string {
+  return date.toLocaleDateString('es-AR', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  });
+}

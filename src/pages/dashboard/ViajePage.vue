@@ -13,7 +13,13 @@
     <div v-else class="viaje-container">
       <h1>Mis viajes</h1>
 
-      <q-list> </q-list>
+      <div class="card-list-container">
+        <viaje-card
+          v-for="(viajeReview, index) in viajes"
+          :key="index"
+          :viaje-review="viajeReview"
+        />
+      </div>
     </div>
   </q-page>
 </template>
@@ -22,6 +28,8 @@
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { getViajes } from 'src/services/viaje.service';
+import ViajeCard from 'components/viaje/ViajeCard.vue';
+import ViajeReviewDTO from 'src/dto/viaje/ViajeReviewDTO';
 
 defineOptions({
   name: 'ViajePage',
@@ -30,7 +38,7 @@ defineOptions({
 const router = useRouter();
 
 // Ref
-const viajes = ref();
+const viajes = ref<Array<ViajeReviewDTO>>();
 
 // Methods
 const fetchViajes = async () => {
@@ -69,6 +77,14 @@ onMounted(async () => {
     font-size: 36px;
     margin-bottom: 20px;
     text-align: center;
+  }
+
+  .card-list-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
   }
 }
 </style>

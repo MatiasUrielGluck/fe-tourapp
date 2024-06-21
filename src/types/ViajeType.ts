@@ -1,9 +1,10 @@
 import EstadosViajeEnum from 'src/enums/EstadosViajeEnum';
+import AccountType from 'src/types/AccountType';
 
 type ViajeType = {
   id: number;
-  turistaId: number;
-  guiaId: number;
+  turista: AccountType;
+  guia: AccountType;
   servicioId: number;
   fechaInicio: string;
   fechaFin: string;

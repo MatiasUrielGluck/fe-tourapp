@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import FiltroDTO from 'src/dto/usuario/FiltroDTO';
 import DateRangeType from 'src/types/DateRangeType';
 import { formatDateSymbol } from 'src/helpers/dateHelper';
+import TipoServicioEnum from 'src/enums/TipoServicioEnum';
 
 const today = new Date();
 const future = new Date(today);
@@ -20,17 +21,21 @@ const initialState: FiltroDTO = {
   idiomas: undefined,
   nombre: undefined,
   pais: undefined,
-  tipoServicio: undefined,
+  tipoServicio: TipoServicioEnum.TOUR_INDIVIDUAL,
 };
 
+const recoveredState = localStorage.getItem('query');
+
 export const useGuideQueryStore = defineStore('guideQuery', {
-  state: (): FiltroDTO => initialState,
+  state: (): FiltroDTO =>
+    recoveredState ? JSON.parse(recoveredState) : initialState,
 
   getters: {},
 
   actions: {
     setQuery(payload: FiltroDTO) {
       this.$state = payload;
+      localStorage.setItem('query', JSON.stringify(payload));
     },
   },
 });

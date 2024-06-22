@@ -14,6 +14,7 @@ type GuiaResponseDTO = {
   credencial: CredencialType;
   servicios: Array<ServicioType>;
   puntuacion: number;
+  reviewCount: number;
   reviews: ReviewType;
   idiomas: Array<string>;
 };

@@ -100,7 +100,7 @@ const menuList = computed(() => {
     {
       icon: '',
       routeName: 'buscar',
-      label: 'Guías disponibles',
+      label: 'Resultados',
       separator: false,
       position: 'top',
       show: false,

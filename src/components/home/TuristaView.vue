@@ -5,11 +5,20 @@
 
     <div class="search-form">
       <div class="form-inputs">
-        <q-input filled v-model="ciudad" label="Ciudad" />
+        <tipo-servicio-select
+          v-model="tipoServicio"
+          :rules="[(val) => required(val)]"
+        />
+        <q-input
+          filled
+          v-model="ciudad"
+          label="Ciudad (obligatorio)"
+          placeholder="Ej: Buenos Aires"
+          :rules="[(val) => required(val)]"
+        />
         <q-input filled v-model="pais" label="País" />
         <q-input filled v-model="nombre" label="Nombre del guía" />
         <q-input filled v-model="apellido" label="Apellido del guía" />
-        <tipo-servicio-select v-model="tipoServicio" />
         <language-select v-model="idiomas" />
       </div>
       <div class="calendar-container">
@@ -21,13 +30,14 @@
       label="Buscar"
       class="search-btn"
       icon="search"
+      :disable="isSearchDisabled"
       @click="createQuery"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import DateRangeType from 'src/types/DateRangeType';
 import { formatDateSymbol } from 'src/helpers/dateHelper';
 import TipoServicioSelect from 'components/common/TipoServicioSelect.vue';
@@ -37,6 +47,7 @@ import FiltroDTO from 'src/dto/usuario/FiltroDTO';
 import { stringToTipoServicio } from 'src/enums/TipoServicioEnum';
 import { useGuideQueryStore } from 'stores/guide-query-store';
 import { useRouter } from 'vue-router';
+import { required } from 'src/helpers/formValidationRules';
 
 defineOptions({
   name: 'TuristaView',
@@ -57,13 +68,18 @@ const router = useRouter();
 const guideQueryStore = useGuideQueryStore();
 
 // Ref
-const nombre = ref<string>('');
-const apellido = ref<string>('');
-const ciudad = ref<string>('');
-const pais = ref<string>('');
-const tipoServicio = ref<string>('');
+const nombre = ref<string>(guideQueryStore.nombre ?? '');
+const apellido = ref<string>(guideQueryStore.apellido ?? '');
+const ciudad = ref<string>(guideQueryStore.ciudad ?? '');
+const pais = ref<string>(guideQueryStore.pais ?? '');
+const tipoServicio = ref<string>('Tour Individual');
 const fechas = ref<DateRangeType>(fechaInicial);
 const idiomas = ref<Array<string>>([]);
+
+// Computed
+const isSearchDisabled = computed(() => {
+  return !ciudad.value;
+});
 
 // Methods
 const createQuery = async () => {
@@ -75,9 +91,7 @@ const createQuery = async () => {
     idiomas: idiomas.value.length ? idiomas.value.join(',') : undefined,
     nombre: nombre.value ? nombre.value : undefined,
     pais: pais.value ? pais.value : undefined,
-    tipoServicio: tipoServicio.value
-      ? stringToTipoServicio(tipoServicio.value)
-      : undefined,
+    tipoServicio: stringToTipoServicio(tipoServicio.value),
   };
 
   guideQueryStore.setQuery(query);
@@ -86,6 +100,10 @@ const createQuery = async () => {
     query: query,
   });
 };
+
+onMounted(() => {
+  localStorage.removeItem('query');
+});
 </script>
 
 <style scoped lang="scss">
@@ -131,7 +149,7 @@ const createQuery = async () => {
       display: flex;
       flex-flow: column nowrap;
       justify-content: space-between;
-      gap: 24px;
+      gap: 8px;
 
       @media (max-width: 760px) {
         width: 100%;

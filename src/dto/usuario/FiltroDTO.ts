@@ -5,7 +5,7 @@ type FiltroDTO = {
   apellido?: string;
   pais?: string;
   ciudad?: string;
-  tipoServicio?: TipoServicioEnum;
+  tipoServicio: TipoServicioEnum;
   fechaInicio: string;
   fechaFin: string;
   idiomas?: string;

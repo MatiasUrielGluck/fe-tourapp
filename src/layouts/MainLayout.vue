@@ -61,7 +61,7 @@ const drawerOpen = ref(false);
 
 // Computed
 const titleBar = computed(() => {
-  const menuItem = menuListToShow.value.find(
+  const menuItem = menuList.value.find(
     (item) => item.routeName === (router.currentRoute.value.name as string)
   );
   return capitalize(<string>menuItem?.label);
@@ -96,6 +96,14 @@ const menuList = computed(() => {
       separator: false,
       position: 'top',
       show: true,
+    },
+    {
+      icon: '',
+      routeName: 'buscar',
+      label: 'Guías disponibles',
+      separator: false,
+      position: 'top',
+      show: false,
     },
     {
       icon: 'manage_accounts',

@@ -11,14 +11,12 @@
           <q-btn icon="close" dense rounded color="primary" v-close-popup />
         </div>
 
-        <p class="title">Guías disponibles</p>
+        <p class="title">Detalle Guía</p>
 
         <q-separator />
 
         <div class="list">
-          <div v-for="(guia, index) in guias" :key="index">
-            <p>{{ guia.nombre }} {{ guia.apellido }}</p>
-          </div>
+          <p>{{ guia.nombre }} {{ guia.apellido }}</p>
         </div>
       </div>
     </q-card>
@@ -29,11 +27,11 @@
 import GuiaResponseDTO from 'src/dto/usuario/GuiaResponseDTO';
 
 defineOptions({
-  name: 'GuiaListModal',
+  name: 'GuiaModal',
 });
 
 interface Props {
-  guias?: Array<GuiaResponseDTO>;
+  guia: GuiaResponseDTO;
 }
 
 defineProps<Props>();

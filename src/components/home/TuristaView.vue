@@ -1,7 +1,5 @@
 <template>
   <div class="turista-view">
-    <guia-list-modal v-model="modalOpen" :guias="guias" />
-
     <h1>¡Encontrá a tu guía!</h1>
     <p>Buscalo por cualquiera de estos datos</p>
 
@@ -23,7 +21,7 @@
       label="Buscar"
       class="search-btn"
       icon="search"
-      @click="fetchFilteredGuides"
+      @click="createQuery"
     />
   </div>
 </template>
@@ -35,11 +33,10 @@ import { formatDateSymbol } from 'src/helpers/dateHelper';
 import TipoServicioSelect from 'components/common/TipoServicioSelect.vue';
 import CalendarSelect from 'components/common/CalendarSelect.vue';
 import LanguageSelect from 'components/common/LanguageSelect.vue';
-import { getFilteredGuides } from 'src/services/usuario.service';
 import FiltroDTO from 'src/dto/usuario/FiltroDTO';
 import { stringToTipoServicio } from 'src/enums/TipoServicioEnum';
-import GuiaResponseDTO from 'src/dto/usuario/GuiaResponseDTO';
-import GuiaListModal from 'components/home/GuiaListModal.vue';
+import { useGuideQueryStore } from 'stores/guide-query-store';
+import { useRouter } from 'vue-router';
 
 defineOptions({
   name: 'TuristaView',
@@ -54,8 +51,12 @@ const fechaInicial: DateRangeType = {
   to: formatDateSymbol(future, '/'),
 };
 
+const router = useRouter();
+
+// Store
+const guideQueryStore = useGuideQueryStore();
+
 // Ref
-const modalOpen = ref<boolean>(false);
 const nombre = ref<string>('');
 const apellido = ref<string>('');
 const ciudad = ref<string>('');
@@ -63,11 +64,10 @@ const pais = ref<string>('');
 const tipoServicio = ref<string>('');
 const fechas = ref<DateRangeType>(fechaInicial);
 const idiomas = ref<Array<string>>([]);
-const guias = ref<Array<GuiaResponseDTO>>([]);
 
 // Methods
-const fetchFilteredGuides = async () => {
-  const params: FiltroDTO = {
+const createQuery = async () => {
+  const query: FiltroDTO = {
     apellido: apellido.value ? apellido.value : undefined,
     ciudad: ciudad.value ? ciudad.value : undefined,
     fechaInicio: formatDateSymbol(new Date(fechas.value.from), '-'),
@@ -80,12 +80,11 @@ const fetchFilteredGuides = async () => {
       : undefined,
   };
 
-  try {
-    guias.value = await getFilteredGuides(params);
-    modalOpen.value = true;
-  } catch (e) {
-    console.error(e);
-  }
+  guideQueryStore.setQuery(query);
+  await router.push({
+    name: 'buscar',
+    query: query,
+  });
 };
 </script>
 

@@ -117,6 +117,7 @@ const canContinue = computed<boolean>(() => {
   );
 });
 
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 const filterLanguage = (val: string, update: any) => {
   if (val === '') {
     update(() => {

@@ -1,32 +1,36 @@
 <template>
-  <q-chip
-    v-for="(lang, index) in idiomas"
-    :key="index"
-    color="primary"
-    text-color="white"
-    removable
-    @remove="removeLanguage(lang)"
-  >
-    {{ lang }}
-  </q-chip>
+  <div class="parent">
+    <div class="chip" v-if="idiomas.length">
+      <q-chip
+        v-for="(lang, index) in idiomas"
+        :key="index"
+        color="primary"
+        text-color="white"
+        removable
+        @remove="removeLanguage(lang)"
+      >
+        {{ lang }}
+      </q-chip>
+    </div>
 
-  <q-select
-    filled
-    v-model="language"
-    use-input
-    input-debounce="0"
-    label="Seleccioná idiomas"
-    hide-selected
-    :options="languageOptions"
-    @filter="filterLanguage"
-    class="form-input"
-  >
-    <template v-slot:no-option>
-      <q-item>
-        <q-item-section class="text-grey"> Sin resultados </q-item-section>
-      </q-item>
-    </template>
-  </q-select>
+    <q-select
+      filled
+      v-model="language"
+      use-input
+      input-debounce="0"
+      label="Seleccioná idiomas"
+      hide-selected
+      :options="languageOptions"
+      @filter="filterLanguage"
+      class="form-input"
+    >
+      <template v-slot:no-option>
+        <q-item>
+          <q-item-section class="text-grey"> Sin resultados </q-item-section>
+        </q-item>
+      </template>
+    </q-select>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -78,8 +82,21 @@ watch(language, (newVal) => {
 </script>
 
 <style scoped lang="scss">
-.form-input {
+.parent {
   width: 100%;
   max-width: 800px;
+
+  .chip {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+  }
+
+  .form-input {
+    width: 100%;
+    max-width: 800px;
+  }
 }
 </style>

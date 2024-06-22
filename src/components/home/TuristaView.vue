@@ -36,6 +36,7 @@ import LanguageSelect from 'components/common/LanguageSelect.vue';
 import { getFilteredGuides } from 'src/services/usuario.service';
 import FiltroDTO from 'src/dto/usuario/FiltroDTO';
 import { stringToTipoServicio } from 'src/enums/TipoServicioEnum';
+import GuiaResponseDTO from 'src/dto/usuario/GuiaResponseDTO';
 
 defineOptions({
   name: 'TuristaView',
@@ -58,6 +59,7 @@ const pais = ref<string>('');
 const tipoServicio = ref<string>('');
 const fechas = ref<DateRangeType>(fechaInicial);
 const idiomas = ref<Array<string>>([]);
+const guias = ref<Array<GuiaResponseDTO>>([]);
 
 // Methods
 const fetchFilteredGuides = async () => {
@@ -75,7 +77,7 @@ const fetchFilteredGuides = async () => {
   };
 
   try {
-    await getFilteredGuides(params);
+    guias.value = await getFilteredGuides(params);
   } catch (e) {
     console.error(e);
   }

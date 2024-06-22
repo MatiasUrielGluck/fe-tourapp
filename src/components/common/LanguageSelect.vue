@@ -23,6 +23,7 @@
       :options="languageOptions"
       @filter="filterLanguage"
       class="form-input"
+      behavior="menu"
     >
       <template v-slot:no-option>
         <q-item>

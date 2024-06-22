@@ -1,5 +1,7 @@
 <template>
   <div class="turista-view">
+    <guia-list-modal v-model="modalOpen" :guias="guias" />
+
     <h1>¡Encontrá a tu guía!</h1>
     <p>Buscalo por cualquiera de estos datos</p>
 
@@ -37,6 +39,7 @@ import { getFilteredGuides } from 'src/services/usuario.service';
 import FiltroDTO from 'src/dto/usuario/FiltroDTO';
 import { stringToTipoServicio } from 'src/enums/TipoServicioEnum';
 import GuiaResponseDTO from 'src/dto/usuario/GuiaResponseDTO';
+import GuiaListModal from 'components/home/GuiaListModal.vue';
 
 defineOptions({
   name: 'TuristaView',
@@ -52,6 +55,7 @@ const fechaInicial: DateRangeType = {
 };
 
 // Ref
+const modalOpen = ref<boolean>(false);
 const nombre = ref<string>('');
 const apellido = ref<string>('');
 const ciudad = ref<string>('');
@@ -78,6 +82,7 @@ const fetchFilteredGuides = async () => {
 
   try {
     guias.value = await getFilteredGuides(params);
+    modalOpen.value = true;
   } catch (e) {
     console.error(e);
   }

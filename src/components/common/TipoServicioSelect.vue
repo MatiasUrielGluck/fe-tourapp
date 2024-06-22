@@ -5,6 +5,7 @@
     :options="serviceOptions"
     label="Tipo de servicio"
     :rules="rules"
+    behavior="menu"
   />
 </template>
 

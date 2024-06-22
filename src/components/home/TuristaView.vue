@@ -73,8 +73,6 @@ const fetchFilteredGuides = async () => {
       : undefined,
   };
 
-  console.warn(params);
-
   try {
     await getFilteredGuides(params);
   } catch (e) {

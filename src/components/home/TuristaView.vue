@@ -1,6 +1,7 @@
 <template>
   <div class="turista-view">
     <h1>¡Encontrá a tu guía!</h1>
+    <p>Buscalo por cualquiera de estos datos</p>
 
     <div class="search-form">
       <div class="form-inputs">
@@ -83,7 +84,7 @@ const fetchFilteredGuides = async () => {
 
 <style scoped lang="scss">
 .turista-view {
-  padding: 18px;
+  padding: 8px 18px 18px;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
@@ -95,6 +96,15 @@ const fetchFilteredGuides = async () => {
     @media (max-width: 760px) {
       font-size: 36px;
     }
+  }
+
+  p {
+    margin-top: 18px;
+    text-align: center;
+    font-size: 23px;
+    margin-bottom: 0;
+    color: #3d3b40;
+    font-weight: 300;
   }
 
   .search-form {

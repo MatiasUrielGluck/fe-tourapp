@@ -7,6 +7,7 @@
         <q-input filled v-model="ciudad" label="Buscá por ciudad" />
         <q-input filled v-model="pais" label="Buscá por país" />
         <tipo-servicio-select v-model="tipoServicio" />
+        <language-select v-model="idiomas" />
       </div>
       <div class="calendar-container">
         <calendar-select v-model="fechas" />
@@ -21,6 +22,7 @@ import DateRangeType from 'src/types/DateRangeType';
 import { formatDateSymbol } from 'src/helpers/dateHelper';
 import TipoServicioSelect from 'components/common/TipoServicioSelect.vue';
 import CalendarSelect from 'components/common/CalendarSelect.vue';
+import LanguageSelect from 'components/common/LanguageSelect.vue';
 
 defineOptions({
   name: 'TuristaView',
@@ -40,6 +42,7 @@ const ciudad = ref<string>('');
 const pais = ref<string>('');
 const tipoServicio = ref<string>('');
 const fechas = ref<DateRangeType>(fechaInicial);
+const idiomas = ref<Array<string>>([]);
 </script>
 
 <style scoped lang="scss">

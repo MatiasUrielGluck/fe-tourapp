@@ -4,19 +4,26 @@
     v-model="model"
     :options="serviceOptions"
     label="Tipo de servicio"
-    :rules="[(val) => required(val)]"
+    :rules="rules"
   />
 </template>
 
 <script setup lang="ts">
+import { ValidationRule } from 'quasar';
 import TipoServicioEnum, {
   tipoServicioToString,
 } from 'src/enums/TipoServicioEnum';
-import { required } from 'src/helpers/formValidationRules';
 
 defineOptions({
   name: 'TipoServicioSelect',
 });
+
+interface Props {
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
+  rules?: ValidationRule<any>[];
+}
+
+defineProps<Props>();
 
 const model = defineModel();
 

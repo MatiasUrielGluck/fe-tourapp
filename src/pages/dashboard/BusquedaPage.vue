@@ -9,10 +9,11 @@
 
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
-import { onMounted, ref } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 import FiltroDTO from 'src/dto/usuario/FiltroDTO';
 import GuiaResponseDTO from 'src/dto/usuario/GuiaResponseDTO';
 import { getFilteredGuides } from 'src/services/usuario.service';
+import { useAppStore } from 'stores/app-store';
 
 defineOptions({
   name: 'BusquedaPage',
@@ -20,6 +21,9 @@ defineOptions({
 
 // Vue
 const route = useRoute();
+
+// Store
+const appStore = useAppStore();
 
 // Ref
 const guias = ref<Array<GuiaResponseDTO>>([]);
@@ -29,14 +33,16 @@ const performSearch = async () => {
   const query: FiltroDTO = <FiltroDTO>route.query;
 
   try {
+    appStore.showPreloader();
     guias.value = await getFilteredGuides(query);
   } catch (e) {
     console.error(e);
   }
+  appStore.hidePreloader();
 };
 
 // Cycle
-onMounted(async () => {
+onBeforeMount(async () => {
   await performSearch();
 });
 </script>

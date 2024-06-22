@@ -1,6 +1,7 @@
 <template>
   <div class="form-container">
     <language-select v-model="kycStore.idiomas" />
+    <div style="margin-bottom: 11px"></div>
 
     <q-input
       v-model="kycStore.credencial.numero"

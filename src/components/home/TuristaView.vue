@@ -13,6 +13,7 @@
         <calendar-select v-model="fechas" />
       </div>
     </div>
+    <q-btn color="primary" label="Buscar" class="search-btn" icon="search" />
   </div>
 </template>
 
@@ -62,12 +63,12 @@ const idiomas = ref<Array<string>>([]);
   }
 
   .search-form {
-    margin: 20px 0;
+    margin: 40px 0 0;
     width: 100%;
-    max-width: 940px;
+    max-width: 750px;
     display: flex;
     flex-flow: row nowrap;
-    justify-content: center;
+    justify-content: space-between;
 
     @media (max-width: 760px) {
       flex-flow: column nowrap;
@@ -75,9 +76,10 @@ const idiomas = ref<Array<string>>([]);
     }
 
     .form-inputs {
-      width: 45%;
+      width: 50%;
       display: flex;
       flex-flow: column nowrap;
+      justify-content: space-between;
       gap: 24px;
 
       @media (max-width: 760px) {
@@ -88,9 +90,10 @@ const idiomas = ref<Array<string>>([]);
     .calendar-container {
       display: flex;
       justify-content: end;
-      width: 45%;
+      width: 50%;
 
       @media (max-width: 760px) {
+        margin-top: 24px;
         width: 100%;
         justify-content: center;
 
@@ -98,6 +101,16 @@ const idiomas = ref<Array<string>>([]);
           width: 100%;
         }
       }
+    }
+  }
+
+  .search-btn {
+    width: 100%;
+    max-width: 750px;
+    margin-top: 48px;
+
+    @media (max-width: 760px) {
+      margin-top: 24px;
     }
   }
 }

@@ -20,7 +20,6 @@
     :options="languageOptions"
     @filter="filterLanguage"
     class="form-input"
-    style="margin-bottom: 20px"
   >
     <template v-slot:no-option>
       <q-item>

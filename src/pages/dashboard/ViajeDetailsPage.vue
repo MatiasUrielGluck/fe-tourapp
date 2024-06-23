@@ -61,14 +61,19 @@
             <q-separator />
 
             <q-card-section class="user-desc">
-              <p class="title">Credencial verificada</p>
-              <p class="user-info">Número:</p>
-              <p class="user-info">Vencimiento:</p>
+              <p class="title">Datos personales</p>
+              <p class="user-info">
+                DNI: <span style="color: #3d3b40">{{ userToShow.dni }}</span>
+              </p>
+              <p class="user-info">
+                Email:
+                <span style="color: #3d3b40">{{ userToShow.email }}</span>
+              </p>
+              <p class="user-info">
+                Número de télefono:
+                <span style="color: #3d3b40">{{ userToShow.numTelefono }}</span>
+              </p>
             </q-card-section>
-
-            <q-card-actions align="center">
-              <q-btn label="Ver foto" color="primary" />
-            </q-card-actions>
           </q-card>
         </div>
       </div>
@@ -120,10 +125,6 @@ const servicio = computed(() => {
   return viajeReview.value.servicio;
 });
 
-const guia = computed(() => {
-  return viaje.value?.guia;
-});
-
 const fechas = computed(() => {
   if (!viaje.value) return;
   const data: DateRangeType = {
@@ -160,6 +161,10 @@ const userFullname = computed<string>(() => {
 const userRole = computed<string>(() => {
   if (accountStore.isGuide) return 'Turista';
   return 'Guía';
+});
+
+const showCredential = computed(() => {
+  return !accountStore.isGuide;
 });
 
 // Methods

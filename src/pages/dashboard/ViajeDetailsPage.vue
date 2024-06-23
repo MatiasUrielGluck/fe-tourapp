@@ -3,6 +3,8 @@
     <h1>Detalles del viaje</h1>
 
     <div v-if="!loading && viajeReview && documentos">
+      <review-modal v-model="reviewOpen" :viaje-review="viajeReview" />
+
       <div class="view">
         <div class="date">
           <calendar-select v-model="fechas" readonly class="calendar" />
@@ -39,6 +41,7 @@ import AccountType from 'src/types/AccountType';
 import DestinoCard from 'components/viaje/DestinoCard.vue';
 import UserCard from 'components/viaje/UserCard.vue';
 import DocumentosList from 'components/viaje/DocumentosList.vue';
+import ReviewModal from 'components/viaje/ReviewModal.vue';
 
 defineOptions({
   name: 'ViajeDetailsPage',
@@ -52,6 +55,7 @@ const appStore = useAppStore();
 const accountStore = useAccountStore();
 
 // Ref
+const reviewOpen = ref(false);
 const loading = ref<boolean>(true);
 const viajeReview = ref<ViajeReviewDTO>();
 const documentos = ref<Array<FacturaDTO>>([]);
@@ -117,6 +121,10 @@ const fetchViajeDetails = async () => {
 // Cycle
 onMounted(async () => {
   await fetchViajeDetails();
+
+  if (query.review) {
+    reviewOpen.value = true;
+  }
 });
 </script>
 

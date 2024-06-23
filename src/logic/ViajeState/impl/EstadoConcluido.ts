@@ -4,6 +4,7 @@ import StateLabelType from 'src/logic/ViajeState/types/StateLabelType';
 import ActionButton from 'src/logic/ViajeState/types/ActionButton';
 import { useAccountStore } from 'stores/account-store';
 import Router from 'src/router';
+import ViajeDetailsQuery from 'src/types/ViajeDetailsQuery';
 
 const accountStore = useAccountStore();
 
@@ -39,7 +40,14 @@ class EstadoConcluido implements ViajeState {
   }
 
   async redirectReview(): Promise<void> {
-    await Router.push({ name: 'review', query: { id: this.viajeId } });
+    const query: ViajeDetailsQuery = { viajeId: this.viajeId, review: true };
+
+    await Router.push({
+      name: 'viajeDetails',
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      query: query,
+    });
   }
 }
 

@@ -20,8 +20,8 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useAppStore } from 'stores/app-store';
-import { useAccountStore } from 'stores/account-store';
 import { useRouter } from 'vue-router';
+import { getChats } from 'src/services/chat.service';
 
 defineOptions({
   name: 'ChatsPage',
@@ -31,7 +31,6 @@ const router = useRouter();
 
 // Store
 const appStore = useAppStore();
-const accountStore = useAccountStore();
 
 // Ref
 const chats = ref();
@@ -40,7 +39,7 @@ const chats = ref();
 const fetchChats = async () => {
   try {
     appStore.showPreloader();
-    console.warn('Fetching chats ', accountStore.isGuide);
+    await getChats();
   } catch (e) {
     console.error(e);
   }

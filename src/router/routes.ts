@@ -37,6 +37,12 @@ const routes: RouteRecordRaw[] = [
         meta: { transition: 'fade' },
       },
       {
+        name: 'chats',
+        path: '/chats',
+        component: () => import('pages/dashboard/ChatsPage.vue'),
+        meta: { transition: 'fade' },
+      },
+      {
         name: 'settings',
         path: '/settings',
         component: () => import('pages/dashboard/SettingsPage.vue'),

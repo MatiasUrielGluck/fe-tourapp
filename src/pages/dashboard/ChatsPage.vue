@@ -14,6 +14,9 @@
         @click="router.push({ name: 'inicio' })"
       />
     </div>
+    <div v-else>
+      <chat-list :chats="chats" />
+    </div>
   </q-page>
 </template>
 
@@ -22,6 +25,7 @@ import { onMounted, ref } from 'vue';
 import { useAppStore } from 'stores/app-store';
 import { useRouter } from 'vue-router';
 import { getChats } from 'src/services/chat.service';
+import ChatList from 'components/chat/ChatList.vue';
 
 defineOptions({
   name: 'ChatsPage',
@@ -39,7 +43,7 @@ const chats = ref();
 const fetchChats = async () => {
   try {
     appStore.showPreloader();
-    await getChats();
+    chats.value = await getChats();
   } catch (e) {
     console.error(e);
   }

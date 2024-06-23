@@ -11,6 +11,7 @@
         <p class="txt">Puntuación</p>
         <q-rating
           v-model="ratingModel"
+          max="5"
           size="2.5em"
           color="primary"
           icon="star_border"

@@ -13,10 +13,12 @@
         <div class="rating">
           <q-rating
             v-model="puntuacion"
-            readonly
             size="1.5em"
-            :max="5"
+            max="5"
             color="primary"
+            icon="star_border"
+            icon-selected="star"
+            readonly
           />
           <p>({{ guia.reviewCount }})</p>
         </div>

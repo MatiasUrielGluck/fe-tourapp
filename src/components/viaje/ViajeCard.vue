@@ -24,7 +24,15 @@
           </q-item-section>
         </q-item>
 
-        <q-rating v-model="puntuacion" readonly :max="5" size="32px" />
+        <q-rating
+          v-model="puntuacion"
+          size="32px"
+          max="5"
+          color="primary"
+          icon="star_border"
+          icon-selected="star"
+          readonly
+        />
       </q-card-section>
     </q-card-section>
 

@@ -4,7 +4,7 @@ import ServicioType from 'src/types/ServicioType';
 
 type ViajeReviewDTO = {
   viaje: ViajeType;
-  review: ReviewType;
+  review?: ReviewType;
   servicio: ServicioType;
 };
 

@@ -9,3 +9,8 @@ export const obtenerDocumentos = async (
   const response = await AuthorizedService.get(`${BASE_URL}/viaje/${viajeId}`);
   return response.data;
 };
+
+export const createTransaction = async (documentId: number) => {
+  const response = await AuthorizedService.get(`${BASE_URL}/${documentId}`);
+  return response.data;
+};

@@ -2,15 +2,20 @@
   <q-page class="viaje-details">
     <h1>Detalles del viaje</h1>
 
-    <div v-if="!loading && viajeReview">
+    <div v-if="!loading && viajeReview && documentos">
       <div class="view">
         <div class="date">
           <calendar-select v-model="fechas" readonly class="calendar" />
         </div>
 
         <destino-card :viaje-review="viajeReview" :precio="precio" />
-
         <user-card :user-to-show="userToShow" />
+      </div>
+      <div class="docs">
+        <documentos-list
+          :documentos="documentos"
+          @refresh-documents="refreshDocuments"
+        />
       </div>
     </div>
   </q-page>
@@ -33,6 +38,7 @@ import { useAccountStore } from 'stores/account-store';
 import AccountType from 'src/types/AccountType';
 import DestinoCard from 'components/viaje/DestinoCard.vue';
 import UserCard from 'components/viaje/UserCard.vue';
+import DocumentosList from 'components/viaje/DocumentosList.vue';
 
 defineOptions({
   name: 'ViajeDetailsPage',
@@ -81,6 +87,18 @@ const userToShow = computed<AccountType>(() => {
 });
 
 // Methods
+const refreshDocuments = async () => {
+  if (!query.viajeId) throw new Error('ID del viaje inválido');
+
+  try {
+    appStore.showPreloader();
+    documentos.value = await obtenerDocumentos(query.viajeId);
+  } catch (e) {
+    console.error(e);
+  }
+  appStore.hidePreloader();
+};
+
 const fetchViajeDetails = async () => {
   if (!query.viajeId) throw new Error('ID del viaje inválido');
 
@@ -124,6 +142,10 @@ onMounted(async () => {
     gap: 36px;
     height: 340px;
 
+    @media (max-width: 1300px) {
+      gap: 12px;
+    }
+
     @media (max-width: 1000px) {
       flex-flow: column nowrap;
       align-content: center;
@@ -145,6 +167,10 @@ onMounted(async () => {
         height: 100%;
       }
     }
+  }
+
+  .docs {
+    margin-top: 36px;
   }
 }
 </style>

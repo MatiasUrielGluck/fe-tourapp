@@ -55,6 +55,7 @@ import { useAppStore } from 'stores/app-store';
 import ViajeRequestDTO from 'src/dto/viaje/ViajeRequestDTO';
 import { createTrip } from 'src/services/viaje.service';
 import { showSnackbar } from 'src/utils/snackbar';
+import { useRouter } from 'vue-router';
 
 defineOptions({
   name: 'GuiaListItem',
@@ -66,6 +67,7 @@ interface Props {
 
 const props = defineProps<Props>();
 
+const router = useRouter();
 const guideQueryStore = useGuideQueryStore();
 const appStore = useAppStore();
 
@@ -112,13 +114,16 @@ const registrarViaje = async () => {
     servicioId: servicio.value.id,
   };
 
-  console.warn(data);
-
   try {
     appStore.showPreloader();
     const viajeRegistrado = await createTrip(data);
     showSnackbar('success', '¡Reservaste el viaje!');
-    console.warn(viajeRegistrado);
+    router.push({
+      name: 'viajeDetails',
+      query: {
+        viajeId: viajeRegistrado.id,
+      },
+    });
   } catch (e) {
     console.error(e);
   }

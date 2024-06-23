@@ -15,9 +15,7 @@ export const getViajeById = async (id: number): Promise<ViajeReviewDTO> => {
   return response.data;
 };
 
-export const createTrip = async (
-  data: ViajeRequestDTO
-): Promise<Array<ViajeType>> => {
+export const createTrip = async (data: ViajeRequestDTO): Promise<ViajeType> => {
   const response = await AuthorizedService.post(`${BASE_URL}/registrar`, data);
   return response.data;
 };

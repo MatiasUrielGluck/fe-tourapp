@@ -15,6 +15,7 @@
       side="left"
       bordered
       style="background: #fefbf6"
+      :breakpoint="1250"
     >
       <q-list class="full-height drawer-items-container">
         <div class="top-menu">

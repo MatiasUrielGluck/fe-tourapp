@@ -128,7 +128,7 @@ const menuList = computed(() => {
       label: 'Historial de pago',
       separator: false,
       position: 'top',
-      show: true,
+      show: false,
     },
     {
       icon: 'settings',

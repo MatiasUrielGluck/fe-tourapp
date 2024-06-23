@@ -31,23 +31,27 @@ import { useRouter } from 'vue-router';
 import { getViajes } from 'src/services/viaje.service';
 import ViajeCard from 'components/viaje/ViajeCard.vue';
 import ViajeReviewDTO from 'src/dto/viaje/ViajeReviewDTO';
+import { useAppStore } from 'stores/app-store';
 
 defineOptions({
   name: 'ViajePage',
 });
 
 const router = useRouter();
+const appStore = useAppStore();
 
 // Ref
 const viajes = ref<Array<ViajeReviewDTO>>();
 
 // Methods
 const fetchViajes = async () => {
+  appStore.showPreloader();
   try {
     viajes.value = await getViajes();
   } catch (e) {
     console.error(e);
   }
+  appStore.hidePreloader();
 };
 
 // Cycle

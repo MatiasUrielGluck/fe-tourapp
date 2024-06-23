@@ -80,12 +80,14 @@ import { eliminarServicio, getServicios } from 'src/services/servicio.service';
 import { tipoServicioToString } from 'src/enums/TipoServicioEnum';
 import ServicioCreationModal from 'components/servicio/ServicioCreationModal.vue';
 import ServicioEditionModal from 'components/servicio/ServicioEditionModal.vue';
+import { useAppStore } from 'stores/app-store';
 
 defineOptions({
   name: 'ServicioPage',
 });
 
 const accountStore = useAccountStore();
+const appStore = useAppStore();
 
 // Ref
 const creationOpen = ref(false);
@@ -99,10 +101,12 @@ const fetchServices = async () => {
   editionOpen.value = false;
 
   try {
+    appStore.showPreloader();
     servicios.value = await getServicios(accountStore.id);
   } catch (e) {
     console.error(e);
   }
+  appStore.hidePreloader();
 };
 
 const deleteService = async (id: number) => {

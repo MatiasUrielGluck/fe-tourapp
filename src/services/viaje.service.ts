@@ -10,6 +10,11 @@ export const getViajes = async (): Promise<Array<ViajeReviewDTO>> => {
   return response.data;
 };
 
+export const getViajeById = async (id: number): Promise<ViajeReviewDTO> => {
+  const response = await AuthorizedService.get(`${BASE_URL}/${id}`);
+  return response.data;
+};
+
 export const createTrip = async (
   data: ViajeRequestDTO
 ): Promise<Array<ViajeType>> => {

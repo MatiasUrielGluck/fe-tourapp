@@ -1,10 +1,24 @@
 <template>
-  <q-date v-model="fechas" range class="calendar" :locale="locale" />
+  <q-date
+    v-model="fechas"
+    range
+    class="calendar"
+    :locale="locale"
+    :readonly="readonly"
+  />
 </template>
 
 <script setup lang="ts">
 defineOptions({
   name: 'CalendarSelect',
+});
+
+interface Props {
+  readonly?: boolean;
+}
+
+withDefaults(defineProps<Props>(), {
+  readonly: false,
 });
 
 const fechas = defineModel();

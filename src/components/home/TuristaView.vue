@@ -1,6 +1,6 @@
 <template>
   <div class="turista-view">
-    <h1>¡Encontrá a tu guía!</h1>
+    <h1>¡Encontrá tu guía!</h1>
     <p>Buscalo por cualquiera de estos datos</p>
 
     <div class="search-form">

@@ -75,7 +75,7 @@
 
           <div class="right-container">
             <div class="right-action">
-              <h1>Te damos la bienvenida a<br />Tour App</h1>
+              <h1>Te damos la bienvenida a<br />¡Encontrá tu guía!</h1>
               <p style="margin: 0">{{ secondarySubtitle }}</p>
               <q-btn
                 no-caps

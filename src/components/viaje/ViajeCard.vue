@@ -52,7 +52,7 @@
 
     <q-separator />
 
-    <q-card-actions v-if="viajeStateUI.actions" align="right">
+    <q-card-actions align="right">
       <q-btn
         v-for="(btn, index) in viajeStateUI.actions"
         :key="index"
@@ -62,6 +62,13 @@
       >
         {{ btn.label }}
       </q-btn>
+      <q-btn
+        label="Ver detalle"
+        color="primary"
+        dense
+        rounded
+        @click="goDetails"
+      />
     </q-card-actions>
   </q-card>
 </template>
@@ -76,6 +83,7 @@ import userTemplate from 'src/assets/icons/user_template.png';
 import ViajeState from 'src/logic/ViajeState/ViajeState';
 import getState from 'src/logic/ViajeState';
 import { ActionFn } from 'src/logic/ViajeState/types/ActionButton';
+import { useRouter } from 'vue-router';
 
 defineOptions({
   name: 'ViajeCard',
@@ -88,6 +96,8 @@ interface Props {
 const props = defineProps<Props>();
 
 const emit = defineEmits(['refreshTrips']);
+
+const router = useRouter();
 
 const accountStore = useAccountStore();
 
@@ -121,6 +131,15 @@ const viajeStateUI = computed<ViajeState>(() => {
 });
 
 // Method
+const goDetails = () => {
+  router.push({
+    name: 'viajeDetails',
+    query: {
+      viajeId: props.viajeReview.viaje.id,
+    },
+  });
+};
+
 const getFullname = (user: AccountType) => {
   return user.nombre + ' ' + user.apellido;
 };

@@ -106,6 +106,14 @@ const menuList = computed(() => {
       show: false,
     },
     {
+      icon: '',
+      routeName: 'viajeDetails',
+      label: 'Detalles del viaje',
+      separator: false,
+      position: 'top',
+      show: false,
+    },
+    {
       icon: 'manage_accounts',
       routeName: 'servicios',
       label: 'Mis servicios',

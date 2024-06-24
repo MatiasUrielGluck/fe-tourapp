@@ -87,18 +87,12 @@ const puntuacion = computed(() => {
 });
 
 const servicio = computed(() => {
-  const filteredService = props.guia.servicios.find((servicio) => {
+  return props.guia.servicios.find((servicio) => {
     return (
       guideQueryStore.tipoServicio === servicio.tipo &&
       guideQueryStore.ciudad?.toLowerCase() === servicio.ciudad.toLowerCase()
     );
   });
-
-  if (!filteredService) {
-    throw new Error('Error interno');
-  }
-
-  return filteredService;
 });
 
 const price = computed(() => {
@@ -107,6 +101,7 @@ const price = computed(() => {
 
 // Method
 const registrarViaje = async () => {
+  if (!servicio.value) return;
   const data: ViajeRequestDTO = {
     ciudad: servicio.value.ciudad,
     fechaFin: guideQueryStore.fechaFin,

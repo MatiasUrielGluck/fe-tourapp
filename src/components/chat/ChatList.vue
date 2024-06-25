@@ -6,6 +6,7 @@
       class="q-mb-sm"
       clickable
       v-ripple
+      @click="router.push({ name: 'chat', params: { id: chat.id } })"
     >
       <q-item-section avatar>
         <q-avatar>
@@ -32,6 +33,7 @@
 import ChatDTO from 'src/dto/chat/ChatDTO';
 import UserTemplate from 'assets/icons/user_template.png';
 import { useAccountStore } from 'stores/account-store';
+import { useRouter } from 'vue-router';
 
 defineOptions({
   name: 'ChatList',
@@ -41,7 +43,9 @@ interface Props {
   chats: Array<ChatDTO>;
 }
 
-const props = defineProps<Props>();
+defineProps<Props>();
+
+const router = useRouter();
 
 const accountStore = useAccountStore();
 

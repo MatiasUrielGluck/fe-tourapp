@@ -43,6 +43,12 @@ const routes: RouteRecordRaw[] = [
         meta: { transition: 'fade' },
       },
       {
+        name: 'chat',
+        path: '/chat/:id',
+        component: () => import('pages/dashboard/IndividualChatPage.vue'),
+        meta: { transition: 'fade' },
+      },
+      {
         name: 'settings',
         path: '/settings',
         component: () => import('pages/dashboard/SettingsPage.vue'),

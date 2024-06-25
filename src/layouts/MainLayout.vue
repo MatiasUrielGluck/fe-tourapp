@@ -91,6 +91,14 @@ const menuList = computed(() => {
       show: true,
     },
     {
+      icon: 'chat',
+      routeName: 'chat',
+      label: 'Chat',
+      separator: false,
+      position: 'top',
+      show: false,
+    },
+    {
       icon: 'flight',
       routeName: 'viajes',
       label: 'Mis viajes',

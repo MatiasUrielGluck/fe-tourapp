@@ -94,7 +94,7 @@ onMounted(async () => {
     gap: 30px;
     max-width: 1140px;
     max-height: 80vh;
-    overflow: scroll;
+    overflow: auto;
     padding-bottom: 50px;
   }
 }

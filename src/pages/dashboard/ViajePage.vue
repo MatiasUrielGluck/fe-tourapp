@@ -47,7 +47,8 @@ const viajes = ref<Array<ViajeReviewDTO>>();
 const fetchViajes = async () => {
   appStore.showPreloader();
   try {
-    viajes.value = await getViajes();
+    const viajesResponse = await getViajes();
+    viajes.value = viajesResponse.sort((a, b) => b.viaje.id - a.viaje.id);
   } catch (e) {
     console.error(e);
   }

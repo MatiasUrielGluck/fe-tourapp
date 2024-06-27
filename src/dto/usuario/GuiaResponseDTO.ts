@@ -15,7 +15,7 @@ type GuiaResponseDTO = {
   servicios: Array<ServicioType>;
   puntuacion: number;
   reviewCount: number;
-  reviews: ReviewType;
+  reviews: Array<ReviewType>;
   idiomas: Array<string>;
 };
 

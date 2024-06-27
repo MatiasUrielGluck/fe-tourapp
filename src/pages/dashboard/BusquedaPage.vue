@@ -13,6 +13,11 @@
     </div>
 
     <div v-else>
+      <guia-modal
+        v-if="selectedGuide"
+        v-model="detailsOpen"
+        :guia-id="selectedGuide"
+      />
       <h1>Guías disponibles</h1>
 
       <q-list separator>
@@ -20,6 +25,7 @@
           v-for="(guia, index) in guias"
           :key="index"
           :guia="guia"
+          @open-info="openDetailsModal"
         />
       </q-list>
     </div>
@@ -34,6 +40,7 @@ import GuiaResponseDTO from 'src/dto/usuario/GuiaResponseDTO';
 import { getFilteredGuides } from 'src/services/usuario.service';
 import { useAppStore } from 'stores/app-store';
 import GuiaListItem from 'components/home/GuiaListItem.vue';
+import GuiaModal from 'components/home/GuiaModal.vue';
 
 defineOptions({
   name: 'BusquedaPage',
@@ -48,8 +55,15 @@ const appStore = useAppStore();
 
 // Ref
 const guias = ref<Array<GuiaResponseDTO>>([]);
+const detailsOpen = ref<boolean>(false);
+const selectedGuide = ref<number>();
 
 // Method
+const openDetailsModal = (id: number) => {
+  selectedGuide.value = id;
+  detailsOpen.value = true;
+};
+
 const performSearch = async () => {
   const query: FiltroDTO = <FiltroDTO>route.query;
 

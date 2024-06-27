@@ -12,3 +12,10 @@ export const getFilteredGuides = async (
   });
   return response.data;
 };
+
+export const getGuideInfoById = async (
+  id: number
+): Promise<GuiaResponseDTO> => {
+  const response = await AuthorizedService.get(`${BASE_URL}/guia/${id}`);
+  return response.data;
+};

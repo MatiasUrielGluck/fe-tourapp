@@ -68,6 +68,7 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+const emit = defineEmits(['openInfo']);
 
 const router = useRouter();
 const guideQueryStore = useGuideQueryStore();
@@ -133,7 +134,7 @@ const registrarViaje = async () => {
 };
 
 const openGuideModal = () => {
-  return;
+  emit('openInfo', props.guia.id);
 };
 </script>
 

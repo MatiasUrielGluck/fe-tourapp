@@ -65,7 +65,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import GuiaResponseDTO from 'src/dto/usuario/GuiaResponseDTO';
 import { useAppStore } from 'stores/app-store';
 import { getGuideInfoById } from 'src/services/usuario.service';
@@ -115,6 +115,13 @@ const fetchGuideDetails = async () => {
   }
   appStore.hidePreloader();
 };
+
+watch(
+  () => props.guiaId,
+  async () => {
+    await fetchGuideDetails();
+  }
+);
 
 // Cycle
 onMounted(async () => {
